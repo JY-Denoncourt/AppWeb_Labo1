@@ -1,6 +1,20 @@
-<h1>Articles#index</h1>
+
+
+<h1>Articles de JY Denoncourt</h1>
 
 Our blog has <%= Article.public_count %> articles and counting!
+
+
+<% if user_signed_in? %>
+Bonjour <%= current_user.email %>
+    		<%= link_to 'logout', destroy_user_session_path, method: :delete %> 
+<% else %>
+    		<%= link_to 'login', new_user_session_path %> 
+<% end %> <br/>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
 
 <ul>
   <% @articles.each do |article| %>
@@ -11,3 +25,70 @@ Our blog has <%= Article.public_count %> articles and counting!
 </ul>
 
 <%= link_to "New Article", new_article_path %>
+
+
+
+</br></br>
+
+
+<button onclick='sendData({},url_for(), "GET");' >show all Articles</button>
+<button onclick='sendData({},url_forId(), "GET");' >show 1 article - Comments</button>
+<button onclick='sendData({article: {title: "new", body: "this is a new one", status: "public"}}, url_for(), "POST");' >Creer 1 article</button>
+<button onclick='sendData({},url_forId(), "DELETE");' >Delete 1 article</button>
+
+<input id="selected_id" type="text" placeholder="id Article"/>
+
+</br>
+
+<button onclick='sendData({},url_forComment(), "Get");' >Show all comment</button>
+<button onclick='sendData({},url_forCommentId(), "Get");' >Show 1 comment</button>
+<button onclick='sendData({comment: {commenter: "new", body: "new comment", status: "public"}},url_forComment(), "POST");' >New 1 comment</button>
+<button onclick='sendData({},url_forCommentId(), "DELETE");' >Delete 1 comment</button>
+<input id="comment_id" type="text" placeholder="id Comment"/>
+
+Réponse de requête:
+<br />
+
+<textarea id="request" rows="25" cols="50"></textarea>
+
+<script>
+    function url_forId(){
+        var id = $("#selected_id").val() || 1;
+        return "/api/articles/"+id+".json";
+    }
+
+    function url_for(){
+        return "/api/articles";
+    }
+
+    function url_forCommentId(){
+      var id = $("#selected_id").val() || 1;
+      var id1 = $("#comment_id").val() || 1;
+      return "/api/articles/"+id+"/comments/"+id1+".json";
+    }
+
+
+    function url_forComment(){
+      var id = $("#selected_id").val() || 1;
+      var id1 = $("#comment_id").val() || 1;
+      return "/api/articles/"+id+"/comments";
+    }
+
+    function sendData(article, url, method){
+        $.ajax({
+            method: method,
+            url: url,
+            data: article,
+            dataType: "json"
+        }).done(function( msg ) {
+            $('#request').val(JSON.stringify(msg));
+            //console.log( msg );
+        }).fail(function(xhr, msg) {
+
+            $('#request').val('code HTTP: ' + xhr.status + '\n' + xhr.responseText);
+        })
+        .always(function() {
+            //alert( "complete" );
+        });
+    }
+</script>

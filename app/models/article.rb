@@ -8,4 +8,9 @@ class Article < ApplicationRecord
 
     validates :title, presence: true
     validates :body, presence: true, length: { minimum: 10 }
+
+
+    def have_picture?
+        return self.picture && self.picture.image.attached?
+    end
 end

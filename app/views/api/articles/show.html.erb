@@ -2,7 +2,7 @@
 
 <p><%= @article.body %></p>
 
-<% if @article.have_picture? %>
+<% if @article.picture.myPicture.attached? %>
   <%= image_tag(@article.picture.myPicture, {size: "250x250"}) %>
 <% else %>
   <p> Aucune image </p>

@@ -1,7 +1,8 @@
 class ArticlesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+  #http_basic_authenticate_with name: "etd", password: "shawi", except: [:index, :show]
   
-  http_basic_authenticate_with name: "etd", password: "shawi", except: [:index, :show]
-  
+#--Base--------------------------------------------------------------------  
   def index
     @articles = Article.all
   end
@@ -14,8 +15,8 @@ class ArticlesController < ApplicationController
 #--New----------------------------------------------------------------
 
   def new
-    @article = Article.new
-    @article.picture = Picture.new
+    @article = Article.new(picture: Picture.new)
+    #@article.picture = Picture.new
   end
 
   def create
@@ -56,7 +57,7 @@ class ArticlesController < ApplicationController
   end
 
 
-
+#--Methode commune------------------------------------------------------
 
   private
     def article_params
@@ -64,4 +65,7 @@ class ArticlesController < ApplicationController
         .require(:article)
         .permit(:title, :body, :status, picture_attributes: [ :id, :name, :myPicture ])
     end
-end
+
+
+    
+  end

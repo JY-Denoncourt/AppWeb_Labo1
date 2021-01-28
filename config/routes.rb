@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   root "articles#index"
 
   
@@ -7,4 +8,9 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  namespace :api, defaults: { format: 'json' } do
+    resources :articles do
+      resources :comments
+    end
+  end
 end
