@@ -12,7 +12,7 @@ class ArticleTest < ActiveSupport::TestCase
 
 
   test "article not created without title" do
-    article = Article.new(body: "body test a plus de 10 carac")
+    article = Article.new(body: "body test a plus de 10 carac", status: "public")
     assert_not article.save
   end
 

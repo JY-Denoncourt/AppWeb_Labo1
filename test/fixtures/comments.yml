@@ -4,10 +4,12 @@ one:
   id: 1
   commenter: MyString
   body: MyText
+  status: ssss
   article_id: 1
 
 two:
   id: 2
   commenter: MyString
   body: MyText
+  status: ddddd
   article_id: 1

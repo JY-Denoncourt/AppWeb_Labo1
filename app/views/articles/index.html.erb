@@ -42,7 +42,7 @@ Bonjour <%= current_user.email %>
 
 <button onclick='sendData({},url_forComment(), "Get");' >Show all comment</button>
 <button onclick='sendData({},url_forCommentId(), "Get");' >Show 1 comment</button>
-<button onclick='sendData({comment: {commenter: "new", body: "new comment", status: "public"}},url_forComment(), "POST");' >New 1 comment</button>
+<button onclick='sendData({comment: {commenter: "new", body: "new comment"}},url_forComment(), "POST");' >New 1 comment</button>
 <button onclick='sendData({},url_forCommentId(), "DELETE");' >Delete 1 comment</button>
 <input id="comment_id" type="text" placeholder="id Comment"/>
 

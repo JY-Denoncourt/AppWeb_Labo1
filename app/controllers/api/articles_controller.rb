@@ -27,6 +27,8 @@ class Api::ArticlesController < ApiController
     
     if article.save
       render json: article.to_json
+    else
+      render json: article.errors, status: :not_acceptable
     end
   end
 
@@ -42,6 +44,8 @@ class Api::ArticlesController < ApiController
 
     if article.update(article_params)
         render json: article.to_json
+      else
+        render json: article.errors, status: :not_acceptable
     end
     
   end
@@ -50,8 +54,12 @@ class Api::ArticlesController < ApiController
 
   def destroy
     article = Article.find(params[:id])
-    article.destroy
-    render json: article
+    
+    if article.destroy
+      render json: article
+    else
+      render json: comment.errors, status: not_found
+    end
   end
 
 
